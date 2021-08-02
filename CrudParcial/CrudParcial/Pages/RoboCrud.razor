@@ -1,0 +1,31 @@
+﻿@page "/RoboCrud"
+@using System.Net.Http
+@using System.Net.Http.Json
+@inject HttpClient Http
+
+<h3>RoboCrud</h3>
+
+<table class="table">
+
+    @foreach (var Elemnto in orespuesta.Data)
+    {
+        <tr>
+            <td>
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+@code {
+
+    public string url = "Aqui va el link de mi api";
+
+    public Data.Response orespuesta = new Data.Response();
+
+
+
+    protected override async Task OnInitializedAsync() =>
+        orespuesta = await Http.GetFromJsonAsync<Data.Response>(url);
+}

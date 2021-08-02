@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "zt0mD+DJ24qDM6S/yQl6l+P7Pi6/Z5tGiZmk6iAk84QpB+HUqsbNM6NOc8Rn8UzyAf58WL509JKaQjw4xQv46w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\jpayano\\Desktop\\Git para subir\\CrudParcial\\CrudParcial\\CrudParcial.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jpayano\\.nuget\\packages\\system.net.http.json\\5.0.0\\system.net.http.json.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
