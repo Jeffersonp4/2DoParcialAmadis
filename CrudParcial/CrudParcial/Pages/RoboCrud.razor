@@ -2,18 +2,31 @@
 @using System.Net.Http
 @using System.Net.Http.Json
 @inject HttpClient Http
+@using CrudParcial.Data
 
 <h3>RoboCrud</h3>
 
 <table class="table">
 
-    @foreach (var Elemnto in orespuesta.Data)
+    @if (orespuesta != null && orespuesta.Data != null)
     {
-        <tr>
-            <td>
+        @foreach (var Elemento in (List<Modelo_De_clase_como_LaAPi>)orespuesta.Data)
+        {
+            <tr>
+                <td>@Elemento.Id</td>
+                <td>@Elemento.cedula</td>
+                <td>@Elemento.Nombre</td>
+                <td>@Elemento.Fecha</td>
+                <td>@Elemento.Que_Se_Robaron</td>
+                <td>@Elemento.Valor_En</td>
+                <td>@Elemento.Donde_ocurrio</td>
+                <td>@Elemento.Latitud</td>
+                <td>@Elemento.Longitud</td>
 
-            </td>
-        </tr>
+            </tr>
+        }
+
+
     }
 
 </table>
@@ -22,7 +35,7 @@
 
     public string url = "Aqui va el link de mi api";
 
-    public Data.Response orespuesta = new Data.Response();
+    public Response orespuesta = new Response();
 
 
 

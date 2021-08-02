@@ -31,7 +31,11 @@ namespace CrudParcial
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
-            services.AddSingleton(new HttpClient
+            var httpClientHanndler = new HttpClientHandler();
+
+            httpClientHanndler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+
+            services.AddSingleton(new HttpClient(httpClientHanndler)
             {
                 BaseAddress = new Uri("Link de la api")
             });
