@@ -90,7 +90,7 @@ using CrudParcial.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Shared\NavMenu.razor"
+#line 18 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 
