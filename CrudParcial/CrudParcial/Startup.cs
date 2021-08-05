@@ -29,7 +29,6 @@ namespace CrudParcial
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
 
             var httpClientHanndler = new HttpClientHandler();
 
@@ -37,7 +36,7 @@ namespace CrudParcial
 
             services.AddSingleton(new HttpClient(httpClientHanndler)
             {
-                BaseAddress = new Uri("Link de la api")
+                BaseAddress = new Uri("https://localhost:44313")
             });
         }
 

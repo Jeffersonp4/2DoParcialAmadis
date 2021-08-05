@@ -105,17 +105,17 @@ using CrudParcial.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 34 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Pages\RoboCrud.razor"
+#line 56 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Pages\RoboCrud.razor"
        
 
-    public string url = "Aqui va el link de mi api";
+    public string url = "api/TablaRoboes";
 
-    public Response orespuesta = new Response();
+    public Response<List<TablaRobo>> orespuesta = new Response<List<TablaRobo>>();
 
 
 
     protected override async Task OnInitializedAsync() =>
-        orespuesta = await Http.GetFromJsonAsync<Data.Response>(url);
+        orespuesta = await Http.GetFromJsonAsync<Response<List<TablaRobo>>>(url);
 
 #line default
 #line hidden

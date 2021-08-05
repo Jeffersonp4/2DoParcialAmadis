@@ -6,22 +6,44 @@
 
 <h3>RoboCrud</h3>
 
+<div class="row">
+    <div class="col-12 text-right">
+        <a href="RoboForm"> Agregar Caso de robo </a>
+    </div>
+</div>
+
 <table class="table">
 
-    @if (orespuesta != null && orespuesta.Data != null)
+    <tr>
+        <th>Id</th>
+        <th>Cedula</th>
+        <th>Nombre</th>
+        <th>Fecha</th>
+        <th>Que_Robaron</th>
+        <th>Valor_Dollar</th>
+        <th>Donde_Ocurrio</th>
+        <th>Latitud</th>
+        <th>Logintud</th>
+    </tr>
+
+    @if (orespuesta != null && orespuesta.ls != null)
     {
-        @foreach (var Elemento in (List<Modelo_De_clase_como_LaAPi>)orespuesta.Data)
+        @foreach (var Elemento in orespuesta.ls)
         {
             <tr>
                 <td>@Elemento.Id</td>
-                <td>@Elemento.cedula</td>
+                <td>@Elemento.Cedula</td>
                 <td>@Elemento.Nombre</td>
                 <td>@Elemento.Fecha</td>
-                <td>@Elemento.Que_Se_Robaron</td>
-                <td>@Elemento.Valor_En</td>
-                <td>@Elemento.Donde_ocurrio</td>
+                <td>@Elemento.QueRobaron</td>
+                <td>@Elemento.ValorDollar</td>
+                <td>@Elemento.DondeOcurrio</td>
                 <td>@Elemento.Latitud</td>
-                <td>@Elemento.Longitud</td>
+                <td>@Elemento.Logintud</td>
+                <td>
+                    <a href="/RoboForm/@Elemento.Id">Editar</a>
+                    <a>Eliminar</a>
+                </td>
 
             </tr>
         }
@@ -33,12 +55,12 @@
 
 @code {
 
-    public string url = "Aqui va el link de mi api";
+    public string url = "api/TablaRoboes";
 
-    public Response orespuesta = new Response();
+    public Response<List<TablaRobo>> orespuesta = new Response<List<TablaRobo>>();
 
 
 
     protected override async Task OnInitializedAsync() =>
-        orespuesta = await Http.GetFromJsonAsync<Data.Response>(url);
+        orespuesta = await Http.GetFromJsonAsync<Response<List<TablaRobo>>>(url);
 }
