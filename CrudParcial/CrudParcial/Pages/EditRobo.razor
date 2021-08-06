@@ -1,20 +1,29 @@
-﻿@page "/RoboForm"
-@page "/RoboForm/{id:int}"
+﻿@page "/EditarRobo/{Id:int}"
+
 @using Data
 @using System.Net.Http
 @using System.Net.Http.Json
 @inject HttpClient Http
 @inject NavigationManager navegar
-<h3>Formulario</h3>
 
-<EditForm Model="@ARobo">
+
+
+<EditForm Model="@EdiRob">
 
     <div class="container-fluid">
 
         <div class="form-group row mb-1">
+            <label class="col-sm-3">ID</label>
+            <div class="col-sm-9">
+               <InputNumber class="form-control" @bind-Value="@EdiRob.Id"></InputNumber>
+            </div>
+
+        </div>
+
+        <div class="form-group row mb-1">
             <label class="col-sm-3">Cedula</label>
             <div class="col-sm-9">
-                <InputNumber class="form-control" @bind-Value="@ARobo.Cedula"></InputNumber>
+                <InputNumber class="form-control" @bind-Value="@EdiRob.Cedula"></InputNumber>
             </div>
 
         </div>
@@ -22,7 +31,7 @@
         <div class="form-group row mb-1">
             <label class="col-sm-3">Nombre</label>
             <div class="col-sm-9">
-                <InputText class="form-control" @bind-Value="@ARobo.Nombre"></InputText>
+                <InputText class="form-control" @bind-Value="@EdiRob.Nombre"></InputText>
             </div>
 
         </div>
@@ -30,7 +39,7 @@
         <div class="form-group row mb-1">
             <label class="col-sm-3">Fecha</label>
             <div class="col-sm-9">
-                <InputDate class="form-control" @bind-Value="@ARobo.Fecha"></InputDate>
+                <InputDate class="form-control" @bind-Value="@EdiRob.Fecha"></InputDate>
             </div>
 
         </div>
@@ -38,7 +47,7 @@
         <div class="form-group row mb-1">
             <label class="col-sm-3">Que_Robaron</label>
             <div class="col-sm-9">
-                <InputText class="form-control" @bind-Value="@ARobo.QueRobaron"></InputText>
+                <InputText class="form-control" @bind-Value="@EdiRob.QueRobaron"></InputText>
             </div>
 
         </div>
@@ -46,7 +55,7 @@
         <div class="form-group row mb-1">
             <label class="col-sm-3">valor_en_Dollar</label>
             <div class="col-sm-9">
-                <InputNumber class="form-control" @bind-Value="@ARobo.ValorDollar"></InputNumber>
+                <InputNumber class="form-control" @bind-Value="@EdiRob.ValorDollar"></InputNumber>
             </div>
 
         </div>
@@ -54,7 +63,7 @@
         <div class="form-group row mb-1">
             <label class="col-sm-3">Donde_Ocurrio</label>
             <div class="col-sm-9">
-                <InputText class="form-control" @bind-Value="@ARobo.DondeOcurrio"></InputText>
+                <InputText class="form-control" @bind-Value="@EdiRob.DondeOcurrio"></InputText>
             </div>
 
         </div>
@@ -62,7 +71,7 @@
         <div class="form-group row mb-1">
             <label class="col-sm-3">Latitud</label>
             <div class="col-sm-9">
-                <InputNumber class="form-control" @bind-Value="@ARobo.Latitud"></InputNumber>
+                <InputNumber class="form-control" @bind-Value="@EdiRob.Latitud"></InputNumber>
             </div>
 
         </div>
@@ -70,14 +79,14 @@
         <div class="form-group row mb-1">
             <label class="col-sm-3">Longitud</label>
             <div class="col-sm-9">
-                <InputNumber class="form-control" @bind-Value="@ARobo.Logintud"></InputNumber>
+                <InputNumber class="form-control" @bind-Value="@EdiRob.Logintud"></InputNumber>
             </div>
 
         </div>
 
         <div class="form-group row mb-1">
             <div class="col-sm-12">
-                <button class="btn btn-primary" @onclick="Save"> Guardar </button>
+                <button class="btn btn-primary" @onclick="Editar"> Guardar </button>
             </div>
 
         </div>
@@ -86,32 +95,35 @@
 
 @code {
 
-    [Parameter] 
-    public int id { get; set; }
-    TablaRobo ARobo = new TablaRobo();
+    [Parameter]
+    public int Id { get; set; }
+    TablaRobo EdiRob = new TablaRobo();
     public string url = "api/TablaRoboes";
     Response<object> respuesta = new Response<object>();
-    Response<TablaRobo> respuestaEdita = new Response<TablaRobo>();
+    Response<TablaRobo> RespuestaEdita = new Response<TablaRobo>();
 
-    private async Task Save()
+
+    private async Task Editar()
     {
-       
-         var Arespuesta = await Http.PostAsJsonAsync<TablaRobo>(url, ARobo);
-         respuesta = Arespuesta.Content.ReadFromJsonAsync<Response<object>>().Result;
-  
-
+        if (Id != 0)
+        {
+            var Arespuesta = await Http.PutAsJsonAsync<object>(url,EdiRob);
+            respuesta = Arespuesta.Content.ReadFromJsonAsync<Response<object>>().Result;
+        }
 
         navegar.NavigateTo("/");
     }
 
     protected override async Task OnInitializedAsync()
     {
-        if (id != 0)
+        if (Id != 0)
         {
-            respuestaEdita = await Http.GetFromJsonAsync<Response<TablaRobo>>(url+"/"+id);
+            RespuestaEdita = await Http.GetFromJsonAsync<Response<TablaRobo>>(url + "/" + Id);
 
-            ARobo = respuestaEdita.ls;
+            EdiRob = RespuestaEdita.ls;
         }
 
     }
+
+
 }

@@ -76,29 +76,28 @@ using CrudParcial.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Pages\RoboForm.razor"
+#line 3 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Pages\EditRobo.razor"
 using Data;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Pages\RoboForm.razor"
+#line 4 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Pages\EditRobo.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Pages\RoboForm.razor"
+#line 5 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Pages\EditRobo.razor"
 using System.Net.Http.Json;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/RoboForm")]
-    [Microsoft.AspNetCore.Components.RouteAttribute("/RoboForm/{id:int}")]
-    public partial class RoboForm : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/EditarRobo/{Id:int}")]
+    public partial class EditRobo : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -106,37 +105,40 @@ using System.Net.Http.Json;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 87 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Pages\RoboForm.razor"
+#line 96 "C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\Pages\EditRobo.razor"
        
 
-    [Parameter] 
-    public int id { get; set; }
-    TablaRobo ARobo = new TablaRobo();
+    [Parameter]
+    public int Id { get; set; }
+    TablaRobo EdiRob = new TablaRobo();
     public string url = "api/TablaRoboes";
     Response<object> respuesta = new Response<object>();
-    Response<TablaRobo> respuestaEdita = new Response<TablaRobo>();
+    Response<TablaRobo> RespuestaEdita = new Response<TablaRobo>();
 
-    private async Task Save()
+
+    private async Task Editar()
     {
-       
-         var Arespuesta = await Http.PostAsJsonAsync<TablaRobo>(url, ARobo);
-         respuesta = Arespuesta.Content.ReadFromJsonAsync<Response<object>>().Result;
-  
-
+        if (Id != 0)
+        {
+            var Arespuesta = await Http.PutAsJsonAsync<object>(url,EdiRob);
+            respuesta = Arespuesta.Content.ReadFromJsonAsync<Response<object>>().Result;
+        }
 
         navegar.NavigateTo("/");
     }
 
     protected override async Task OnInitializedAsync()
     {
-        if (id != 0)
+        if (Id != 0)
         {
-            respuestaEdita = await Http.GetFromJsonAsync<Response<TablaRobo>>(url+"/"+id);
+            RespuestaEdita = await Http.GetFromJsonAsync<Response<TablaRobo>>(url + "/" + Id);
 
-            ARobo = respuestaEdita.ls;
+            EdiRob = RespuestaEdita.ls;
         }
 
     }
+
+
 
 #line default
 #line hidden

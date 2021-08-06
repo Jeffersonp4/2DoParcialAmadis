@@ -56,3 +56,7 @@ C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\obj\Debug\net5.0
 C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\obj\Debug\net5.0\Razor\Pages\Mapa.razor.g.cs
 C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\obj\Debug\net5.0\RazorDeclaration\Pages\RoboForm.razor.g.cs
 C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\obj\Debug\net5.0\Razor\Pages\RoboForm.razor.g.cs
+C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\obj\Debug\net5.0\RazorDeclaration\Pages\EliminarRobo.razor.g.cs
+C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\obj\Debug\net5.0\Razor\Pages\EliminarRobo.razor.g.cs
+C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\obj\Debug\net5.0\RazorDeclaration\Pages\EditRobo.razor.g.cs
+C:\Users\jpayano\Desktop\Git para subir\CrudParcial\CrudParcial\obj\Debug\net5.0\Razor\Pages\EditRobo.razor.g.cs

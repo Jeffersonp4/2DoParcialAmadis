@@ -1,0 +1,36 @@
+﻿@page "/EliminarRobo/{Id:int}"
+
+@using Data
+@using System.Net.Http
+@using System.Net.Http.Json
+@inject HttpClient Http
+@inject NavigationManager navegar
+
+<h3>EliminarRobo</h3>
+
+<p>Desea eliminar el id numero @Id de Este robo? </p>
+
+<div>
+    <button @onclick="Cancelar">Cancelar</button>
+    <button @onclick="Eliminar">Eliminar</button>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    public string url = "api/TablaRoboes";
+    Response<object> respuesta = new Response<object>();
+
+    private void Cancelar() => navegar.NavigateTo("/");
+
+    private async Task Eliminar()
+    {
+        var Arespuesta = await Http.DeleteAsync(url+"/"+Id);
+        respuesta = Arespuesta.Content.ReadFromJsonAsync<Response<object>>().Result;
+
+
+
+        navegar.NavigateTo("/");
+    }
+
+}

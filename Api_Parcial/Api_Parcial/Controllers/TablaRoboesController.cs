@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Api_Parcial.Models;
 using Api_Parcial.Models.Response;
+using Api_Parcial.Models.Request;
 
 namespace Api_Parcial.Controllers
 {
@@ -23,17 +24,14 @@ namespace Api_Parcial.Controllers
 
         // GET: api/TablaRoboes
         [HttpGet]
-        public async Task<IActionResult> GetRobos()
+        public IActionResult GetRobos()
         {
             Response<List<TablaRobo>> respuesta = new Response<List<TablaRobo>>();
-            List<TablaRobo> lista = null;
 
             try
-            {
-
-
-                lista = await _context.TablaRobos.ToListAsync();
-
+            { 
+                var lista = _context.TablaRobos.ToList();
+                respuesta.exito = 1;
                 respuesta.ls = lista;
             }
             catch (Exception ex)
@@ -48,18 +46,18 @@ namespace Api_Parcial.Controllers
 
         // GET: api/TablaRoboes/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRobo(int id)
+        public IActionResult GetRobo(int id)
         {
 
             Response<TablaRobo> respuesta = new Response<TablaRobo>();
-             TablaRobo lista = null;
+             
 
             try
             {
 
 
-                lista = await _context.TablaRobos.FindAsync(id);
-
+                var lista =  _context.TablaRobos.Find(id);
+                respuesta.exito = 1;
                 respuesta.ls = lista;
             }
             catch (Exception ex)
@@ -75,25 +73,26 @@ namespace Api_Parcial.Controllers
         // PUT: api/TablaRoboes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRobos(TablaRobo Robo)
+        public IActionResult PutRobos(Robo_Request request)
         {
             Response<object> respuesta = new Response<object>();
 
             try
             {
-                var tabla = _context.TablaRobos.Find(Robo.Id);
+                TablaRobo tabla = _context.TablaRobos.Find(request.Id);
 
-                tabla.Cedula = Robo.Cedula;
-                tabla.Nombre = Robo.Nombre;
-                tabla.Fecha = Robo.Fecha;
-                tabla.QueRobaron = Robo.QueRobaron;
-                tabla.ValorDollar = Robo.ValorDollar;
-                tabla.DondeOcurrio = Robo.DondeOcurrio;
-                tabla.Latitud = Robo.Latitud;
-                tabla.Logintud = Robo.Logintud;
+                tabla.Cedula = request.Cedula;
+                tabla.Nombre = request.Nombre;
+                tabla.Fecha = request.Fecha;
+                tabla.QueRobaron = request.QueRobaron;
+                tabla.ValorDollar = request.ValorDollar;
+                tabla.DondeOcurrio = request.DondeOcurrio;
+                tabla.Latitud = request.Latitud;
+                tabla.Logintud = request.Logintud;
 
                 _context.Entry(tabla).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
+                respuesta.ls = tabla;
                 respuesta.exito = 1;
             }
             catch (Exception ex)
@@ -107,22 +106,30 @@ namespace Api_Parcial.Controllers
 
             
 
-            
-           
-
         }
 
         // POST: api/TablaRoboes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TablaRobo>> PostRobos(TablaRobo robo)
+        public IActionResult PostRobos(Robo_Request _Request)
         {
             Response<object> respuesta = new Response<object>();
-
+            TablaRobo tabla = new TablaRobo();
             try
             {
-                _context.TablaRobos.Add(robo);
-                await _context.SaveChangesAsync();
+                
+                tabla.Cedula = _Request.Cedula;
+                tabla.Nombre = _Request.Nombre;
+                tabla.Fecha = _Request.Fecha;
+                tabla.QueRobaron = _Request.QueRobaron;
+                tabla.ValorDollar = _Request.ValorDollar;
+                tabla.DondeOcurrio = _Request.DondeOcurrio;
+                tabla.Latitud = _Request.Latitud;
+                tabla.Logintud = _Request.Logintud;
+                _context.TablaRobos.Add(tabla);
+                _context.SaveChanges();
+                respuesta.exito = 1;
+                respuesta.ls = tabla;
             }
             catch (Exception ex)
             {
@@ -134,23 +141,31 @@ namespace Api_Parcial.Controllers
             }
 
 
-            return CreatedAtAction("GetRobo", new { id = robo.Id }, robo);
+            return Ok(respuesta);
         }
 
         // DELETE: api/TablaRoboes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRobo(int id)
+        public IActionResult DeleteRobo(int id)
         {
-            var paciente = await _context.TablaRobos.FindAsync(id);
-            if (paciente == null)
+            Response<object> respuesta = new Response<object>();
+
+            try
             {
-                return NotFound();
+                TablaRobo tabla = _context.TablaRobos.Find(id);
+
+                _context.Remove(tabla);
+                _context.SaveChanges();
+                respuesta.exito = 1;
+            }
+            catch (Exception ex)
+            {
+
+                respuesta.mensaje = ex.Message;
             }
 
-            _context.TablaRobos.Remove(paciente);
-            await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(respuesta);
         }
 
         private bool RoboExists(int id)

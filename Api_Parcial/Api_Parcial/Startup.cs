@@ -18,6 +18,7 @@ namespace Api_Parcial
 {
     public class Startup
     {
+        readonly string Micors = "MiCors";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,6 +32,16 @@ namespace Api_Parcial
 
             services.AddControllers();
             services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddCors(options => {
+                options.AddPolicy(name: Micors,
+                                 builder =>
+                                 {
+                                     builder.WithOrigins("*");
+                                 }
+
+                    );
+            });
+
             services.AddDbContext<db_parcialContext>(options => options.UseMySql("server=localhost;uid=root;database=db_parcial", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.20-mariadb")));
             services.AddSwaggerGen(c =>
             {
@@ -53,14 +64,8 @@ namespace Api_Parcial
 
             app.UseRouting();
 
-            app.UseCors(x => x
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .SetIsOriginAllowed(origin => true)
-            .AllowCredentials());
-
             app.UseAuthorization();
-
+            app.UseCors(Micors);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
